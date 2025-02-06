@@ -1,2 +1,4 @@
 /painttyDesktop.pro.user
 /*.user
+.DS_Store
+/build
