@@ -2,3 +2,5 @@
 /*.user
 .DS_Store
 /build
+.qmake.stash
+Makefile
