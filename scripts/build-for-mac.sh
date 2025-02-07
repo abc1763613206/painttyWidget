@@ -34,3 +34,9 @@ $DEPLOY_PATH "$BUILD_DIR/main-Release/build/MrPaint.app"
 cp "$UPDATER_DIR/darwin_arm64/updater" "$BUILD_DIR/main-Release/build/MrPaint.app/Contents/MacOS/"
 $DEPLOY_PATH "$BUILD_DIR/main_intel-Release/build/MrPaint.app"
 cp "$UPDATER_DIR/darwin_amd64/updater" "$BUILD_DIR/main_intel-Release/build/MrPaint.app/Contents/MacOS/"
+
+# 将.app文件打包为zip文件
+ditto -c -k --sequesterRsrc --keepParent "$BUILD_DIR/main-Release/build/MrPaint.app" "$BUILD_DIR/main-Release/build/MrPaint.zip"
+ditto -c -k --sequesterRsrc --keepParent "$BUILD_DIR/main_intel-Release/build/MrPaint.app" "$BUILD_DIR/main_intel-Release/build/MrPaint.zip"
+
+echo "Build for mac completed successfully!"
