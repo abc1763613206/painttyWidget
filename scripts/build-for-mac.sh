@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # 如果QTDIR变量未设置，则报错终止
 if [ -z "$QTDIR" ]; then
     echo "QTDIR变量未设置，请设置QTDIR变量后运行此脚本"
@@ -12,6 +14,7 @@ export PATH="$QTDIR/bin:$PATH"
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 BUILD_DIR=$(cd "$SCRIPT_DIR/../build" && pwd)
 PROJECT_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
+UPDATER_DIR=$(cd "$SCRIPT_DIR/../../painttyUpdater/bin" && pwd)
 
 echo "PROJECT_DIR: $PROJECT_DIR"
 echo "BUILD_DIR: $BUILD_DIR"
@@ -27,5 +30,7 @@ cd "$BUILD_DIR/main-Release" && /usr/bin/make -j10
 cd "$BUILD_DIR/main_intel-Release" && /usr/bin/make -j10
 
 # 再执行macdeployqt
-# $DEPLOY_PATH "$BUILD_DIR/main-Release/build/MrPaint.app"
-# $DEPLOY_PATH "$BUILD_DIR/main_intel-Release/build/MrPaint.app"
+$DEPLOY_PATH "$BUILD_DIR/main-Release/build/MrPaint.app"
+cp "$UPDATER_DIR/darwin_arm64/updater" "$BUILD_DIR/main-Release/build/MrPaint.app/Contents/MacOS/"
+$DEPLOY_PATH "$BUILD_DIR/main_intel-Release/build/MrPaint.app"
+cp "$UPDATER_DIR/darwin_amd64/updater" "$BUILD_DIR/main_intel-Release/build/MrPaint.app/Contents/MacOS/"
